@@ -1,4 +1,4 @@
-import React, { useState, type JSX } from 'react'
+import React, { useEffect, useState, type JSX } from 'react'
 import classnames from 'classnames'
 
 import { HeadingLevel } from '../../types/headingLevel'
@@ -62,15 +62,45 @@ export const AccordionItem = ({
   )
 }
 
+function buildExpansions(
+  items: AccordionItemProps[],
+  multiselectable: boolean
+) {
+  const lastExpandedItem = items.findLast(({ expanded }) => expanded)
+  return items.reduce<Record<string, boolean | undefined>>((dict, item) => {
+    dict[item.id] = !multiselectable
+      ? !!lastExpandedItem && item.id === lastExpandedItem.id
+      : !!item.expanded
+    return dict
+  }, {})
+}
+
 export const Accordion = ({
   bordered,
   items,
   className,
   multiselectable = false,
 }: AccordionProps): JSX.Element => {
-  const [openItems, setOpenState] = useState(
-    items.filter((i) => !!i.expanded).map((i) => i.id)
+  const [expansions, setExpansions] = useState(
+    buildExpansions(items, multiselectable)
   )
+
+  useEffect(() => {
+    const knownIds = Object.keys(expansions)
+    const newItems = items.filter(({ id }) => !knownIds.includes(id))
+    if (!newItems.length) return
+
+    setExpansions((prevExpansions) => {
+      const updatedExpansions = { ...prevExpansions }
+      const newExpansions = buildExpansions(newItems, multiselectable)
+      if (!multiselectable && Object.values(newExpansions).includes(true)) {
+        for (const key in updatedExpansions) {
+          updatedExpansions[key] = false
+        }
+      }
+      return { ...updatedExpansions, ...newExpansions }
+    })
+  }, [items, expansions])
 
   const classes = classnames(
     'usa-accordion',
@@ -81,21 +111,20 @@ export const Accordion = ({
   )
 
   const toggleItem = (itemId: AccordionItemProps['id']): void => {
-    const newOpenItems = [...openItems]
-    const itemIndex = openItems.indexOf(itemId)
-    const isMultiselectable = multiselectable
-
-    if (itemIndex > -1) {
-      newOpenItems.splice(itemIndex, 1)
-    } else {
-      if (isMultiselectable) {
-        newOpenItems.push(itemId)
+    setExpansions((prevExpansions) => {
+      const newExpansions = { ...prevExpansions }
+      if (newExpansions[itemId]) {
+        newExpansions[itemId] = false
       } else {
-        newOpenItems.splice(0, newOpenItems.length)
-        newOpenItems.push(itemId)
+        if (!multiselectable) {
+          for (const key in newExpansions) {
+            newExpansions[key] = false
+          }
+        }
+        newExpansions[itemId] = true
       }
-    }
-    setOpenState(newOpenItems)
+      return newExpansions
+    })
   }
 
   return (
@@ -107,7 +136,7 @@ export const Accordion = ({
         <AccordionItem
           key={`accordionItem_${i}`}
           {...item}
-          expanded={openItems.indexOf(item.id) > -1}
+          expanded={expansions[item.id] ?? false}
           handleToggle={(e): void => {
             if (item.handleToggle) item.handleToggle(e)
             toggleItem(item.id)
