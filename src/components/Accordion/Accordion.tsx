@@ -96,13 +96,14 @@ export const Accordion = ({
     setExpansions((prevExpansions) => {
       const updatedExpansions = new Map(prevExpansions)
       const newExpansions = buildExpansions(newItems, multiselectable)
-      if (!multiselectable && newExpansions.values().some((val) => val)) {
+      const newEntries = Array.from(newExpansions.entries())
+      if (!multiselectable && newEntries.some(([, value]) => value)) {
         updatedExpansions.forEach((val, key, map) => map.set(key, false))
       }
-      return new Map([
-        ...Array.from(updatedExpansions.entries()),
-        ...Array.from(newExpansions.entries()),
-      ])
+      for (const [key, value] of newEntries) {
+        updatedExpansions.set(key, value)
+      }
+      return updatedExpansions
     })
   }, [items, expansions])
 
