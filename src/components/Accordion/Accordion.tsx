@@ -89,7 +89,7 @@ export const Accordion = ({
   )
 
   useEffect(() => {
-    const knownIds = expansions.keys().toArray()
+    const knownIds = Array.from(expansions.keys())
     const newItems = items.filter(({ id }) => !knownIds.includes(id))
     if (!newItems.length) return
 
