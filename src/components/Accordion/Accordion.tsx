@@ -117,16 +117,16 @@ export const Accordion = ({
 
   const toggleItem = (itemId: AccordionItemProps['id']): void => {
     setExpansions((prevExpansions) => {
-      const newExpansions = new Map(prevExpansions)
-      if (newExpansions.get(itemId)) {
-        newExpansions.set(itemId, false)
+      const updatedExpansions = new Map(prevExpansions)
+      if (updatedExpansions.get(itemId)) {
+        updatedExpansions.set(itemId, false)
       } else {
         if (!multiselectable) {
-          newExpansions.forEach((val, key, map) => map.set(key, false))
+          updatedExpansions.forEach((val, key, map) => map.set(key, false))
         }
-        newExpansions.set(itemId, true)
+        updatedExpansions.set(itemId, true)
       }
-      return newExpansions
+      return updatedExpansions
     })
   }
 
