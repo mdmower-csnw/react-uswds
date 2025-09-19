@@ -67,12 +67,15 @@ function buildExpansions(
   multiselectable: boolean
 ) {
   const lastExpandedItem = items.findLast(({ expanded }) => expanded)
-  return items.reduce<Record<string, boolean | undefined>>((dict, item) => {
-    dict[item.id] = !multiselectable
-      ? !!lastExpandedItem && item.id === lastExpandedItem.id
-      : !!item.expanded
-    return dict
-  }, {})
+  return items.reduce((map, item) => {
+    map.set(
+      item.id,
+      !multiselectable
+        ? !!lastExpandedItem && item.id === lastExpandedItem.id
+        : !!item.expanded
+    )
+    return map
+  }, new Map<string, boolean | undefined>())
 }
 
 export const Accordion = ({
@@ -86,19 +89,20 @@ export const Accordion = ({
   )
 
   useEffect(() => {
-    const knownIds = Object.keys(expansions)
+    const knownIds = expansions.keys().toArray()
     const newItems = items.filter(({ id }) => !knownIds.includes(id))
     if (!newItems.length) return
 
     setExpansions((prevExpansions) => {
-      const updatedExpansions = { ...prevExpansions }
+      const updatedExpansions = new Map(prevExpansions)
       const newExpansions = buildExpansions(newItems, multiselectable)
-      if (!multiselectable && Object.values(newExpansions).includes(true)) {
-        for (const key in updatedExpansions) {
-          updatedExpansions[key] = false
-        }
+      if (!multiselectable && newExpansions.values().some((val) => val)) {
+        updatedExpansions.forEach((val, key, map) => map.set(key, false))
       }
-      return { ...updatedExpansions, ...newExpansions }
+      return new Map([
+        ...Array.from(updatedExpansions.entries()),
+        ...Array.from(newExpansions.entries()),
+      ])
     })
   }, [items, expansions])
 
@@ -112,16 +116,14 @@ export const Accordion = ({
 
   const toggleItem = (itemId: AccordionItemProps['id']): void => {
     setExpansions((prevExpansions) => {
-      const newExpansions = { ...prevExpansions }
-      if (newExpansions[itemId]) {
-        newExpansions[itemId] = false
+      const newExpansions = new Map(prevExpansions)
+      if (newExpansions.get(itemId)) {
+        newExpansions.set(itemId, false)
       } else {
         if (!multiselectable) {
-          for (const key in newExpansions) {
-            newExpansions[key] = false
-          }
+          newExpansions.forEach((val, key, map) => map.set(key, false))
         }
-        newExpansions[itemId] = true
+        newExpansions.set(itemId, true)
       }
       return newExpansions
     })
@@ -136,7 +138,7 @@ export const Accordion = ({
         <AccordionItem
           key={`accordionItem_${i}`}
           {...item}
-          expanded={expansions[item.id] ?? false}
+          expanded={expansions.get(item.id) ?? false}
           handleToggle={(e): void => {
             if (item.handleToggle) item.handleToggle(e)
             toggleItem(item.id)
