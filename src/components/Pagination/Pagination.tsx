@@ -172,7 +172,7 @@ export const Pagination = ({
             {onClickPrevious ? (
               <button
                 type="button"
-                className="usa-pagination__link usa-pagination__previous-page bg-transparent border-0 cursor-pointer"
+                className="usa-pagination__link usa-pagination__previous-page bg-transparent border-0 padding-0 cursor-pointer"
                 aria-label="Previous page"
                 data-testid="pagination-previous"
                 onClick={onClickPrevious}>
@@ -210,7 +210,7 @@ export const Pagination = ({
             {onClickNext ? (
               <button
                 type="button"
-                className="usa-pagination__link usa-pagination__next-page bg-transparent border-0 cursor-pointer"
+                className="usa-pagination__link usa-pagination__next-page bg-transparent border-0 padding-0 cursor-pointer"
                 aria-label="Next page"
                 data-testid="pagination-next"
                 onClick={onClickNext}>
