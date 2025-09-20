@@ -1,21 +1,17 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 import classnames from 'classnames'
+import { LegacyInputRef } from '../../../types/legacyInputRef'
 
-type CheckboxProps = {
+export type CheckboxProps = {
   id: string
   name: string
   className?: string
   label: React.ReactNode
-  inputRef?:
-    | string
-    | ((instance: HTMLInputElement | null) => void)
-    | React.RefObject<HTMLInputElement>
-    | null
-    | undefined
+  inputRef?: LegacyInputRef
   tile?: boolean
   labelDescription?: React.ReactNode
   indeterminate?: boolean
-}
+} & JSX.IntrinsicElements['input']
 
 export const Checkbox = ({
   id,
@@ -27,7 +23,7 @@ export const Checkbox = ({
   labelDescription,
   indeterminate,
   ...inputProps
-}: CheckboxProps & JSX.IntrinsicElements['input']): React.ReactElement => {
+}: CheckboxProps): JSX.Element => {
   const classes = classnames('usa-checkbox', className)
   const checkboxClasses = classnames('usa-checkbox__input', {
     'usa-checkbox__input--tile': tile,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 import { Table } from './Table'
 
 export default {
@@ -227,27 +227,25 @@ const scrollableTestContent = (
   </>
 )
 
-export const Bordered = (): React.ReactElement => (
-  <Table bordered>{testContent}</Table>
-)
+export const Bordered = (): JSX.Element => <Table bordered>{testContent}</Table>
 
-export const Borderless = (): React.ReactElement => (
+export const Borderless = (): JSX.Element => (
   <Table bordered={false}>{testContent}</Table>
 )
 
-export const BorderedWithCaption = (): React.ReactElement => (
+export const BorderedWithCaption = (): JSX.Element => (
   <Table bordered caption="This is a bordered table with a caption">
     {testContent}
   </Table>
 )
 
-export const BorderlessWithCaption = (): React.ReactElement => (
+export const BorderlessWithCaption = (): JSX.Element => (
   <Table bordered={false} caption="This is a borderless table with a caption">
     {testContent}
   </Table>
 )
 
-export const ContentWidth = (): React.ReactElement => (
+export const ContentWidth = (): JSX.Element => (
   <Table bordered caption="This table demonstrates the default layout (width)">
     <thead>
       <tr>
@@ -276,7 +274,7 @@ export const ContentWidth = (): React.ReactElement => (
   </Table>
 )
 
-export const FullWidth = (): React.ReactElement => (
+export const FullWidth = (): JSX.Element => (
   <Table
     bordered
     caption="This table uses the fullWidth prop to increase to 100% width"
@@ -308,7 +306,7 @@ export const FullWidth = (): React.ReactElement => (
   </Table>
 )
 
-export const Fixed = (): React.ReactElement => (
+export const Fixed = (): JSX.Element => (
   <Table
     bordered
     caption="This table uses the fixed prop to force equal width columns"
@@ -341,7 +339,7 @@ export const Fixed = (): React.ReactElement => (
   </Table>
 )
 
-export const Scrollable = (): React.ReactElement => (
+export const Scrollable = (): JSX.Element => (
   <>
     <Table scrollable bordered striped caption="This is a scrollable table">
       {scrollableTestContent}
@@ -359,7 +357,7 @@ export const StickyHeader = {
 }
 
 export const Striped = {
-  render: (argTypes: StorybookArguments): React.ReactElement => (
+  render: (argTypes: StorybookArguments): JSX.Element => (
     <Table
       striped
       bordered={argTypes.bordered}
@@ -370,7 +368,7 @@ export const Striped = {
 }
 
 export const Compact = {
-  render: (argTypes: StorybookArguments): React.ReactElement => (
+  render: (argTypes: StorybookArguments): JSX.Element => (
     <Table
       compact
       bordered={argTypes.bordered}
@@ -382,7 +380,7 @@ export const Compact = {
 }
 
 export const StackedStylesDemo = {
-  render: (argTypes: StorybookArguments): React.ReactElement => (
+  render: (argTypes: StorybookArguments): JSX.Element => (
     <Table
       bordered={argTypes.bordered}
       stackedStyle={argTypes.stackedStyle}

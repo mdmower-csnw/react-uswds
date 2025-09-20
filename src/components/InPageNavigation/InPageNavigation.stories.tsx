@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 import { InPageNavigation } from './InPageNavigation'
 import { CONTENT } from './content'
 import { HeadingLevel } from '../../types/headingLevel'
@@ -54,7 +54,7 @@ type StorybookArguments = {
   headingElements: HeadingLevel[]
 }
 
-export const Default = (argTypes: StorybookArguments): React.ReactElement => (
+export const Default = (argTypes: StorybookArguments): JSX.Element => (
   <InPageNavigation
     content={CONTENT}
     headingLevel={argTypes.headingLevel}
@@ -68,9 +68,7 @@ export const Default = (argTypes: StorybookArguments): React.ReactElement => (
 
 // Storybook seems to force anchor links to open in a new window,
 // so this story is just to demonstrate how the scroll offset works
-export const ScrollOffset = (
-  argTypes: StorybookArguments
-): React.ReactElement => (
+export const ScrollOffset = (argTypes: StorybookArguments): JSX.Element => (
   <InPageNavigation
     content={CONTENT}
     headingLevel={argTypes.headingLevel}

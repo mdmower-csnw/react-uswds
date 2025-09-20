@@ -17,6 +17,7 @@ Source: https://designsystem.digital.gov/components/checkbox
     },
   },
 }
+
 export default meta
 type Story = StoryObj<typeof Checkbox>
 

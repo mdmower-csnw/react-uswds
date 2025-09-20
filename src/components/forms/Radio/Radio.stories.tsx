@@ -17,6 +17,7 @@ Source: https://designsystem.digital.gov/components/radio-buttons
     },
   },
 }
+
 export default meta
 type Story = StoryObj<typeof Radio>
 
@@ -28,10 +29,6 @@ const Template: StoryFn<typeof Radio> = (args) => (
     label="My Radio Button"
   />
 )
-
-export const Default: Story = {
-  render: Template,
-}
 
 export const Selected: Story = {
   render: Template,
