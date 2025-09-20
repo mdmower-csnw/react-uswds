@@ -27,33 +27,33 @@ const Template: StoryFn<typeof Checkbox> = (args) => (
 
 export const Default: Story = {
   render: Template,
-  args: { label: 'My checkbox' },
+  args: { label: 'My Checkbox' },
 }
 
 export const Checked: Story = {
   render: Template,
-  args: { defaultChecked: true, label: 'My checkbox' },
+  args: { defaultChecked: true, label: 'My Checkbox' },
 }
 
 export const Indeterminate: Story = {
   render: Template,
-  args: { indeterminate: true, label: 'My checkbox' },
+  args: { indeterminate: true, label: 'My Checkbox' },
 }
 
 export const Disabled: Story = {
   render: Template,
-  args: { disabled: true, label: 'My checkbox' },
+  args: { disabled: true, label: 'My Checkbox' },
 }
 
 export const WithRichLabel: Story = {
   render: Template,
-  args: { label: <strong>My checkbox</strong> },
+  args: { label: <strong>My Checkbox</strong> },
 }
 
 export const WithLabelDescription: Story = {
   render: Template,
   args: {
-    label: 'My checkbox',
+    label: 'My Checkbox',
     labelDescription:
       'This is optional text that can be used to describe the label in more detail.',
   },
@@ -61,13 +61,13 @@ export const WithLabelDescription: Story = {
 
 export const Tile: Story = {
   render: Template,
-  args: { label: 'My checkbox', tile: true },
+  args: { label: 'My Checkbox', tile: true },
 }
 
 export const TileWithLabelDescription: Story = {
   render: Template,
   args: {
-    label: 'My checkbox',
+    label: 'My Checkbox',
     labelDescription:
       'This is optional text that can be used to describe the label in more detail.',
     tile: true,

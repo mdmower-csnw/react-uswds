@@ -30,6 +30,10 @@ const Template: StoryFn<typeof Radio> = (args) => (
   />
 )
 
+export const Default: Story = {
+  render: Template,
+}
+
 export const Selected: Story = {
   render: Template,
   args: { defaultChecked: true },
