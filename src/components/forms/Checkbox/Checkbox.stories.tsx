@@ -25,7 +25,7 @@ const Template: StoryFn<typeof Checkbox> = (args) => (
   <Checkbox {...args} id="checkbox" name="checkbox" />
 )
 
-export const Default: Story = {
+export const DefaultCheckbox: Story = {
   render: Template,
   args: { label: 'My Checkbox' },
 }

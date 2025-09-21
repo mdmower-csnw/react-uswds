@@ -30,7 +30,7 @@ const Template: StoryFn<typeof Radio> = (args) => (
   />
 )
 
-export const Default: Story = {
+export const DefaultRadio: Story = {
   render: Template,
 }
 
