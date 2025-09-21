@@ -1,8 +1,33 @@
-import React, { useEffect, useState, type JSX } from 'react'
+import React, { useEffect, useMemo, useState, type JSX } from 'react'
 import classnames from 'classnames'
 import { HeadingLevel } from '../../types/headingLevel'
 import { Link } from '../Link/Link'
 import styles from './InPageNavigation.module.scss'
+
+function findHeadingElements(
+  el: JSX.Element,
+  headingElements: HeadingLevel[]
+): JSX.Element[] {
+  const headings: JSX.Element[] = []
+  if (typeof el !== 'object' || !el.type) {
+    return headings
+  }
+
+  if (headingElements.includes(el.type)) {
+    headings.push(el)
+  }
+  const children = el.props?.children
+  if (children) {
+    if (Array.isArray(children)) {
+      for (const child of children) {
+        headings.push(...findHeadingElements(child, headingElements))
+      }
+    } else {
+      headings.push(...findHeadingElements(children, headingElements))
+    }
+  }
+  return headings
+}
 
 export type InPageNavigationProps = {
   className?: string
@@ -13,6 +38,7 @@ export type InPageNavigationProps = {
   rootMargin?: string
   scrollOffset?: string
   threshold?: number
+  minimumHeadingCount?: number
   title?: string
   headingElements?: HeadingLevel[]
 } & Omit<JSX.IntrinsicElements['div'], 'content'>
@@ -26,6 +52,7 @@ export const InPageNavigation = ({
   rootMargin = '0px 0px 0px 0px',
   scrollOffset,
   threshold = 1,
+  minimumHeadingCount = 2,
   title = 'On this page',
   headingElements = ['h2', 'h3'],
   ...divProps
@@ -41,8 +68,9 @@ export const InPageNavigation = ({
   } as React.CSSProperties
   const [currentSection, setCurrentSection] = useState('')
   if (headingElements.length === 0) headingElements = ['h2', 'h3']
-  const sectionHeadings: JSX.Element[] = content.props.children.filter(
-    (el: JSX.Element) => headingElements.includes(el.type)
+  const sectionHeadings = useMemo(
+    () => findHeadingElements(content, headingElements),
+    [content, headingElements]
   )
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
@@ -66,6 +94,10 @@ export const InPageNavigation = ({
       document.querySelector('html')?.classList.remove(styles['smooth-scroll'])
     }
   })
+
+  if (sectionHeadings.length < minimumHeadingCount) {
+    return <></>
+  }
 
   return (
     <div className="usa-in-page-nav-container" {...divProps}>
