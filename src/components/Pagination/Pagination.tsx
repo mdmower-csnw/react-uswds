@@ -30,13 +30,13 @@ const PaginationPage = ({
     page: number
   ) => void
 }) => {
-  const linkClasses = classnames(
-    'usa-pagination__button',
+  const linkClasses = classnames('usa-pagination__button', {
+    'usa-current': isCurrent,
+  })
+  const buttonClasses = classnames(
+    linkClasses,
     'bg-transparent',
-    'cursor-pointer',
-    {
-      'usa-current': isCurrent,
-    }
+    'cursor-pointer'
   )
 
   return (
@@ -47,7 +47,7 @@ const PaginationPage = ({
         <button
           type="button"
           data-testid="pagination-page-number"
-          className={linkClasses}
+          className={buttonClasses}
           aria-label={`Page ${page}`}
           aria-current={isCurrent ? 'page' : undefined}
           onClick={(event) => {
@@ -164,6 +164,29 @@ export const Pagination = ({
   const prevPage = !isOnFirstPage && currentPage - 1
   const nextPage = !isOnLastPage && currentPage + 1
 
+  const prevLinkClasses = classnames(
+    'usa-pagination__link',
+    'usa-pagination__previous-page'
+  )
+  const prevButtonClasses = classnames(
+    prevLinkClasses,
+    'border-0',
+    'padding-0',
+    'bg-transparent',
+    'cursor-pointer'
+  )
+  const nextLinkClasses = classnames(
+    'usa-pagination__link',
+    'usa-pagination__next-page'
+  )
+  const nextButtonClasses = classnames(
+    nextLinkClasses,
+    'border-0',
+    'padding-0',
+    'bg-transparent',
+    'cursor-pointer'
+  )
+
   return (
     <nav aria-label="Pagination" className={navClasses} {...props}>
       <ul className="usa-pagination__list">
@@ -172,7 +195,7 @@ export const Pagination = ({
             {onClickPrevious ? (
               <button
                 type="button"
-                className="usa-pagination__link usa-pagination__previous-page bg-transparent border-0 padding-0 cursor-pointer"
+                className={prevButtonClasses}
                 aria-label="Previous page"
                 data-testid="pagination-previous"
                 onClick={onClickPrevious}>
@@ -182,7 +205,7 @@ export const Pagination = ({
             ) : (
               <Link
                 href={`${pathname}?page=${prevPage}`}
-                className="usa-pagination__link usa-pagination__previous-page"
+                className={prevLinkClasses}
                 aria-label="Previous page">
                 <Icon.NavigateBefore aria-hidden={true} />
                 <span className="usa-pagination__link-text">Previous</span>
@@ -210,7 +233,7 @@ export const Pagination = ({
             {onClickNext ? (
               <button
                 type="button"
-                className="usa-pagination__link usa-pagination__next-page bg-transparent border-0 padding-0 cursor-pointer"
+                className={nextButtonClasses}
                 aria-label="Next page"
                 data-testid="pagination-next"
                 onClick={onClickNext}>
@@ -220,7 +243,7 @@ export const Pagination = ({
             ) : (
               <Link
                 href={`${pathname}?page=${nextPage}`}
-                className="usa-pagination__link usa-pagination__next-page"
+                className={nextLinkClasses}
                 aria-label="Next page">
                 <span className="usa-pagination__link-text">Next</span>
                 <Icon.NavigateNext aria-hidden={true} />
