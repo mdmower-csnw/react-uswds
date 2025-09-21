@@ -58,7 +58,9 @@ export const InPageNavigation = ({
   }
   const observer = new IntersectionObserver(handleIntersection, observerOptions)
   useEffect(() => {
-    document.querySelectorAll('h2,h3').forEach((h) => observer.observe(h))
+    document
+      .querySelectorAll(headingElements.join(','))
+      .forEach((h) => observer.observe(h))
     document.querySelector('html')?.classList.add(styles['smooth-scroll'])
     return () => {
       document.querySelector('html')?.classList.remove(styles['smooth-scroll'])
