@@ -135,7 +135,7 @@ export const Textarea = (): JSX.Element => {
           validation
           heading="Story Requirements"
           headingLevel="h4">
-          <ValidationChecklist id="validate-code">
+          <ValidationChecklist id="validate-story">
             <ValidationItem id="paragraphs" isValid={validations.paragraphs}>
               Write at least two paragraphs
             </ValidationItem>
@@ -144,7 +144,7 @@ export const Textarea = (): JSX.Element => {
             </ValidationItem>
           </ValidationChecklist>
         </Alert>
-        <Label htmlFor="code">Story</Label>
+        <Label htmlFor="story">Story</Label>
         <TextArea
           id="story"
           name="story"
