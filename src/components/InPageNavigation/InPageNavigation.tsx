@@ -67,7 +67,9 @@ export const InPageNavigation = ({
     '--margin-offset': scrollOffset,
   } as React.CSSProperties
   const [currentSection, setCurrentSection] = useState('')
-  if (headingElements.length === 0) headingElements = ['h2', 'h3']
+  headingElements = !headingElements.length
+    ? ['h2', 'h3']
+    : headingElements.sort()
   const sectionHeadings = useMemo(
     () => findHeadingElements(content, headingElements),
     [content, headingElements]
@@ -109,7 +111,7 @@ export const InPageNavigation = ({
             <ul className="usa-in-page-nav__list">
               {sectionHeadings.map((el: JSX.Element) => {
                 const heading: JSX.Element = el.props.children
-                const href: string = el.props.id
+                const href: string = el.props.id ?? ''
                 const hClass = classnames('usa-in-page-nav__item', {
                   'usa-in-page-nav__item--primary':
                     el.type === headingElements[0],
@@ -121,7 +123,7 @@ export const InPageNavigation = ({
                   <li
                     key={`usa-in-page-nav__item_${heading}`}
                     className={hClass}>
-                    <Link href={`#${href}`} className={lClass}>
+                    <Link href={`#${CSS.escape(href)}`} className={lClass}>
                       {heading}
                     </Link>
                   </li>
