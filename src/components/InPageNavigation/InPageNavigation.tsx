@@ -95,42 +95,42 @@ export const InPageNavigation = ({
     }
   })
 
-  if (sectionHeadings.length < minimumHeadingCount) {
-    return <></>
-  }
-
   return (
     <div className="usa-in-page-nav-container" {...divProps}>
-      <aside
-        className={asideClasses}
-        aria-label={title}
-        data-testid="InPageNavigation">
-        <nav className={navClasses} {...remainingNavProps}>
-          <Heading className="usa-in-page-nav__heading" tabIndex={0}>
-            {title}
-          </Heading>
-          <ul className="usa-in-page-nav__list">
-            {sectionHeadings.map((el: JSX.Element) => {
-              const heading: JSX.Element = el.props.children
-              const href: string = el.props.id
-              const hClass = classnames('usa-in-page-nav__item', {
-                'usa-in-page-nav__item--primary':
-                  el.type === headingElements[0],
-              })
-              const lClass = classnames('usa-in-page-nav__link', {
-                'usa-current': href === currentSection,
-              })
-              return (
-                <li key={`usa-in-page-nav__item_${heading}`} className={hClass}>
-                  <Link href={`#${href}`} className={lClass}>
-                    {heading}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-      </aside>
+      {sectionHeadings.length >= minimumHeadingCount && (
+        <aside
+          className={asideClasses}
+          aria-label={title}
+          data-testid="InPageNavigation">
+          <nav className={navClasses} {...remainingNavProps}>
+            <Heading className="usa-in-page-nav__heading" tabIndex={0}>
+              {title}
+            </Heading>
+            <ul className="usa-in-page-nav__list">
+              {sectionHeadings.map((el: JSX.Element) => {
+                const heading: JSX.Element = el.props.children
+                const href: string = el.props.id
+                const hClass = classnames('usa-in-page-nav__item', {
+                  'usa-in-page-nav__item--primary':
+                    el.type === headingElements[0],
+                })
+                const lClass = classnames('usa-in-page-nav__link', {
+                  'usa-current': href === currentSection,
+                })
+                return (
+                  <li
+                    key={`usa-in-page-nav__item_${heading}`}
+                    className={hClass}>
+                    <Link href={`#${href}`} className={lClass}>
+                      {heading}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+        </aside>
+      )}
       <main
         id="main-content"
         className={mainClasses}
