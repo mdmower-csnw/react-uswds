@@ -88,7 +88,7 @@ export const InPageNavigation = ({
                   el.type === headingElements[0],
               })
               const lClass = classnames('usa-in-page-nav__link', {
-                'usa-current': href === currentSection,
+                'usa-current': !!href && href === currentSection,
               })
               return (
                 <li key={`usa-in-page-nav__item_${heading}`} className={hClass}>
