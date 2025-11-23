@@ -41,7 +41,7 @@ describe('InPageNavigation component', () => {
             minimumHeadingCount={minimumHeadingCount}
           />
         )
-    const nav = screen.queryByTestId('InPageNavigation')
+    const nav = screen.getByTestId('InPageNavigation')
     const user = userEvent.setup()
     return {
       nav,
@@ -71,8 +71,7 @@ describe('InPageNavigation component', () => {
 
   it('renders without errors', () => {
     const { nav } = setup({ plain: true })
-    expect(nav).toBeInTheDocument()
-    const heading = getByRole(nav!, 'heading', {
+    const heading = getByRole(nav, 'heading', {
       level: 4,
       name: 'On this page',
     })
@@ -82,17 +81,16 @@ describe('InPageNavigation component', () => {
 
   it('sets the heading and title', () => {
     const { nav } = setup()
-    expect(nav).toBeInTheDocument()
-    const heading = getByRole(nav!, 'heading', {
+    const heading = getByRole(nav, 'heading', {
       level: Number(props.headingLevel.slice(-1)),
       name: props.title,
     })
     expect(heading).toBeInTheDocument()
   })
 
-  it('does not render if minimum number of headings is unmet', () => {
+  it('is hidden if minimum number of headings is unmet', () => {
     const { nav } = setup({ headingElements: ['h1'] })
-    expect(nav).not.toBeInTheDocument()
+    expect(nav).toHaveClass('display-none')
   })
 
   it('only finds headings in selected content', () => {
@@ -101,17 +99,13 @@ describe('InPageNavigation component', () => {
       contentSelector: '.main-content',
       minimumHeadingCount: 1,
     })
-    expect(nav).toBeInTheDocument()
-
-    const headings = within(nav!).getAllByRole('link')
+    const headings = within(nav).getAllByRole('link')
     expect(headings).toHaveLength(1)
   })
 
   it('finds nested headings', () => {
     const { nav } = setup({ content: NESTED_CONTENT })
-    expect(nav).toBeInTheDocument()
-
-    const cardHeadings = within(nav!).getAllByRole('link', {
+    const cardHeadings = within(nav).getAllByRole('link', {
       name: 'Card heading',
     })
     expect(cardHeadings).toHaveLength(2)
@@ -120,19 +114,17 @@ describe('InPageNavigation component', () => {
   describe('lists the right heading types if', () => {
     it('is undefined', () => {
       const { nav } = setup({ plain: true })
-      expect(nav).toBeInTheDocument()
       const contentHeadingsTwo = screen.getAllByRole('heading', { level: 2 })
       const contentHeadingsThree = screen.getAllByRole('heading', { level: 3 })
       const contentHeadings = contentHeadingsTwo.concat(contentHeadingsThree)
-      const headingLinks = within(nav!).getAllByRole('link')
+      const headingLinks = within(nav).getAllByRole('link')
       expect(contentHeadings.length).toBe(headingLinks.length)
     })
 
     it('is defined', () => {
       const { nav } = setup({ headingElements: ['h2'] })
-      expect(nav).toBeInTheDocument()
       const contentHeadingsTwo = screen.getAllByRole('heading', { level: 2 })
-      const headingLinks = within(nav!).getAllByRole('link')
+      const headingLinks = within(nav).getAllByRole('link')
       expect(contentHeadingsTwo.length).toBe(headingLinks.length)
     })
   })

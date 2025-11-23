@@ -1,67 +1,7 @@
-// TODO: Improve type and handling of `content` prop
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect, useMemo, useRef, useState, type JSX } from 'react'
+import React, { useEffect, useRef, type JSX } from 'react'
 import classnames from 'classnames'
 import { HeadingLevel } from '../../types/headingLevel'
-import { Link } from '../Link/Link'
 import styles from './InPageNavigation.module.scss'
-
-function findHeadingElements(
-  el: JSX.Element,
-  headingElements: HeadingLevel[],
-  contentSelector?: string
-): JSX.Element[] {
-  const headings: JSX.Element[] = []
-  if (typeof el !== 'object' || !el.type) {
-    return headings
-  }
-
-  // If contentSelector is defined, wait to include headings until we've located
-  // the content element.
-  if (contentSelector) {
-    if (contentSelector.startsWith('.')) {
-      const className = contentSelector.slice(1)
-      const elHasClass = (el.props?.className as string | undefined)
-        ?.split(' ')
-        .some((s) => !!s && s === className)
-      if (elHasClass) {
-        contentSelector = undefined
-      }
-    } else if (contentSelector.startsWith('#')) {
-      const id = contentSelector.slice(1)
-      const elHasId = (el.props?.id as string | undefined) === id
-      if (elHasId) {
-        contentSelector = undefined
-      }
-    } else {
-      console.warn(
-        'Only class and id selectors are supported by InPageNavigation contentSelector'
-      )
-      return headings
-    }
-  } else if (headingElements.includes(el.type)) {
-    headings.push(el)
-  }
-
-  const children = el.props?.children
-  if (children) {
-    if (Array.isArray(children)) {
-      for (const child of children) {
-        headings.push(
-          ...findHeadingElements(child, headingElements, contentSelector)
-        )
-      }
-    } else {
-      headings.push(
-        ...findHeadingElements(children, headingElements, contentSelector)
-      )
-    }
-  }
-
-  return headings
-}
 
 export type InPageNavigationProps = {
   className?: string
@@ -93,7 +33,12 @@ export const InPageNavigation = ({
   headingElements = ['h2', 'h3'],
   ...divProps
 }: InPageNavigationProps): JSX.Element => {
-  const asideClasses = classnames('usa-in-page-nav', styles.target, className)
+  const asideClasses = classnames(
+    'usa-in-page-nav',
+    'display-none',
+    styles.target,
+    className
+  )
   const { className: navClassName, ...remainingNavProps } = navProps || {}
   const navClasses = classnames('usa-in-page-nav__nav', navClassName)
   const { className: mainClassName, ...remainingMainProps } = mainProps || {}
@@ -102,15 +47,11 @@ export const InPageNavigation = ({
   const offsetStyle = {
     '--margin-offset': scrollOffset,
   } as React.CSSProperties
-  const [currentSection, setCurrentSection] = useState('')
   headingElements = !headingElements.length
     ? ['h2', 'h3']
     : headingElements.sort()
-  const sectionHeadings = useMemo(
-    () => findHeadingElements(content, headingElements, contentSelector),
-    [content, headingElements, contentSelector]
-  )
   const mainRef = useRef<HTMLElement>(null)
+  const asideRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const container = contentSelector
@@ -119,8 +60,16 @@ export const InPageNavigation = ({
     if (!container) return
 
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      const aside = asideRef.current
+      if (!aside) return
+
       const entry = entries.findLast((entry) => entry.isIntersecting)
-      if (entry) setCurrentSection(entry.target.id)
+      const id = entry?.target.id
+      if (!id) return
+
+      aside.querySelectorAll('a').forEach((a) => {
+        a.classList.toggle('usa-current', a.dataset.id === id)
+      })
     }
 
     const observer = new IntersectionObserver(handleIntersection, {
@@ -140,42 +89,77 @@ export const InPageNavigation = ({
     }
   }, [contentSelector, headingElements, rootMargin, threshold])
 
+  useEffect(() => {
+    const aside = asideRef.current
+    if (!aside) return
+
+    const ul = aside.querySelector('ul')!
+    while (ul.firstChild) ul.removeChild(ul.firstChild)
+
+    const container = contentSelector
+      ? mainRef.current?.querySelector(contentSelector)
+      : mainRef.current
+    if (!container) {
+      aside.classList.add('display-none')
+      return
+    }
+
+    const headings = container.querySelectorAll<HTMLHeadingElement>(
+      headingElements.join(',')
+    )
+    if (headings.length < minimumHeadingCount) {
+      aside.classList.add('display-none')
+      return
+    }
+
+    const primaryTagName = headingElements[0].toUpperCase()
+    for (const heading of Array.from(headings)) {
+      const clone = heading.cloneNode(true)
+
+      // Make sure in-page nav does not add duplicate IDs to document
+      clone.childNodes.forEach((child) => {
+        if (child.nodeType !== Node.ELEMENT_NODE) return
+
+        const childEl = child as HTMLElement
+        childEl.id = ''
+        childEl.querySelectorAll('[id]').forEach((el) => {
+          el.id = ''
+        })
+      })
+
+      const { id, tagName } = heading
+
+      const a = document.createElement('a')
+      a.href = `#${CSS.escape(id)}`
+      a.dataset.id = id
+      while (clone.firstChild) a.appendChild(clone.firstChild)
+
+      const li = document.createElement('li')
+      li.className = classnames('usa-in-page-nav__item', {
+        'usa-in-page-nav__item--primary': tagName === primaryTagName,
+      })
+
+      li.appendChild(a)
+      ul.appendChild(li)
+    }
+
+    aside.classList.remove('display-none')
+  }, [content, contentSelector, headingElements, minimumHeadingCount])
+
   return (
     <div className="usa-in-page-nav-container" {...divProps}>
-      {sectionHeadings.length >= minimumHeadingCount && (
-        <aside
-          className={asideClasses}
-          aria-label={title}
-          data-testid="InPageNavigation">
-          <nav className={navClasses} {...remainingNavProps}>
-            <Heading className="usa-in-page-nav__heading" tabIndex={0}>
-              {title}
-            </Heading>
-            <ul className="usa-in-page-nav__list">
-              {sectionHeadings.map((el: JSX.Element, i) => {
-                const heading: JSX.Element = el.props.children
-                const href: string = el.props.id ?? ''
-                const hClass = classnames('usa-in-page-nav__item', {
-                  'usa-in-page-nav__item--primary':
-                    el.type === headingElements[0],
-                })
-                const lClass = classnames('usa-in-page-nav__link', {
-                  'usa-current': !!href && href === currentSection,
-                })
-                return (
-                  <li
-                    key={`usa-in-page-nav__item_${el.props.id ?? i}`}
-                    className={hClass}>
-                    <Link href={`#${CSS.escape(href)}`} className={lClass}>
-                      {heading}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </nav>
-        </aside>
-      )}
+      <aside
+        ref={asideRef}
+        className={asideClasses}
+        aria-label={title}
+        data-testid="InPageNavigation">
+        <nav className={navClasses} {...remainingNavProps}>
+          <Heading className="usa-in-page-nav__heading" tabIndex={0}>
+            {title}
+          </Heading>
+          <ul className="usa-in-page-nav__list"></ul>
+        </nav>
+      </aside>
       <main
         ref={mainRef}
         id="main-content"
