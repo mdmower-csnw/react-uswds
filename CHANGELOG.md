@@ -2,6 +2,72 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [13.0.0](https://github.com/mdmower-csnw/react-uswds/compare/12.0.0...13.0.0) (2026-09-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **package-manager:** Use npm instead of yarn ([#3500](https://github.com/mdmower-csnw/react-uswds/issues/3500))
+* Refactor Alert component for composability ([#3497](https://github.com/mdmower-csnw/react-uswds/issues/3497))
+* Upgrade Node.js dependencies (Actions and Supported versions) ([#3498](https://github.com/mdmower-csnw/react-uswds/issues/3498))
+* upgrade to USWDS 3.13.0 ([#3266](https://github.com/mdmower-csnw/react-uswds/issues/3266))
+* There are several breaking (visual) changes in the release notes for USWDS 3.9.0: https://github.com/uswds/uswds/releases/tag/v3.9.0
+* **release:** Fix react-uswds release pipeline ([#3148](https://github.com/mdmower-csnw/react-uswds/issues/3148))
+
+### Features
+
+* Add 24h view for time picker ([#3506](https://github.com/mdmower-csnw/react-uswds/issues/3506)) ([351f789](https://github.com/mdmower-csnw/react-uswds/commit/351f78969c82ee64974103ec74d594c21345a7dc))
+* add DateSelector dateFormat prop ([#2726](https://github.com/mdmower-csnw/react-uswds/issues/2726)) ([34c19c1](https://github.com/mdmower-csnw/react-uswds/commit/34c19c1fc5816609491434a31984ff6fc35667da))
+* add optional change/selected text to FileInput ([#3116](https://github.com/mdmower-csnw/react-uswds/issues/3116)) ([41e40c4](https://github.com/mdmower-csnw/react-uswds/commit/41e40c40c986efaac73d8f475bcab314acbc085d))
+* Add support for Node 24, the active LTS version ([#3306](https://github.com/mdmower-csnw/react-uswds/issues/3306)) ([bc6ca69](https://github.com/mdmower-csnw/react-uswds/commit/bc6ca696b9b288b83b4f63904ed0439868bd6f74))
+* Close Language Selector on pressing escape and on blur ([#3534](https://github.com/mdmower-csnw/react-uswds/issues/3534)) ([f4c7f6a](https://github.com/mdmower-csnw/react-uswds/commit/f4c7f6aa5019c38939cb152eb2151f1dfb9cc36b))
+* Export component props ([#3118](https://github.com/mdmower-csnw/react-uswds/issues/3118)) ([2941f8c](https://github.com/mdmower-csnw/react-uswds/commit/2941f8ca88fcb96b919feae0c185a28c132e16a9))
+* **package-manager:** Use npm instead of yarn ([#3500](https://github.com/mdmower-csnw/react-uswds/issues/3500)) ([061db30](https://github.com/mdmower-csnw/react-uswds/commit/061db3072ae9e01c09f7b0872ab21db063688e54))
+* Refactor Alert component for composability ([#3497](https://github.com/mdmower-csnw/react-uswds/issues/3497)) ([7bf790e](https://github.com/mdmower-csnw/react-uswds/commit/7bf790eb71b3342b29e40e0c539187730536d4d3))
+* Update Accordion expansion behavior ([#3262](https://github.com/mdmower-csnw/react-uswds/issues/3262)) ([dc8bf86](https://github.com/mdmower-csnw/react-uswds/commit/dc8bf868442a90f525293bd2865b753a2c072037))
+* Upgrade Node.js dependencies (Actions and Supported versions) ([#3498](https://github.com/mdmower-csnw/react-uswds/issues/3498)) ([1c8b5b4](https://github.com/mdmower-csnw/react-uswds/commit/1c8b5b4f7b0e1e6a1dd98107cc06c03fe4bd3a0b))
+* Upgrade to React 19 ([#3088](https://github.com/mdmower-csnw/react-uswds/issues/3088)) ([2ad0462](https://github.com/mdmower-csnw/react-uswds/commit/2ad046278848d3499580a61c954496556f45ec30))
+* upgrade to USWDS 3.10.0 ([#3265](https://github.com/mdmower-csnw/react-uswds/issues/3265)) ([b30504c](https://github.com/mdmower-csnw/react-uswds/commit/b30504c64acefe770855bbb5dc07888536951f18))
+* upgrade to USWDS 3.13.0 ([#3266](https://github.com/mdmower-csnw/react-uswds/issues/3266)) ([0d96892](https://github.com/mdmower-csnw/react-uswds/commit/0d9689202b84fcd8c59cc168a4a5ab2a8f480de4))
+* upgrade to USWDS 3.8.2 ([#3263](https://github.com/mdmower-csnw/react-uswds/issues/3263)) ([443a077](https://github.com/mdmower-csnw/react-uswds/commit/443a07723326c502e2d3bca2dddfb57937871a4a))
+* upgrade to USWDS 3.9.0 ([#3264](https://github.com/mdmower-csnw/react-uswds/issues/3264)) ([bf452b4](https://github.com/mdmower-csnw/react-uswds/commit/bf452b4fa7988f379fe61de0215cf1024b473c33))
+
+
+### Bug Fixes
+
+* [#2620](https://github.com/mdmower-csnw/react-uswds/issues/2620) Move form templates in Storybook ([#3097](https://github.com/mdmower-csnw/react-uswds/issues/3097)) ([0262854](https://github.com/mdmower-csnw/react-uswds/commit/026285419bcf99a85099436202e65cf535adbcba))
+* **a11y:** Set Pagination's last page aria-label to indicate that it is the last page ([#3499](https://github.com/mdmower-csnw/react-uswds/issues/3499)) ([3b42cd9](https://github.com/mdmower-csnw/react-uswds/commit/3b42cd950d9ac6fe0b783231efb0ca209352c1b9))
+* Add style as class to scrollbar width utility to fix CSP issue ([#2761](https://github.com/mdmower-csnw/react-uswds/issues/2761)) ([2380608](https://github.com/mdmower-csnw/react-uswds/commit/238060877fb7cf4716f04685b71ec3e1b726ecf4))
+* Address eslint react-hook violations in CharacterCount ([#3321](https://github.com/mdmower-csnw/react-uswds/issues/3321)) ([d1d8f55](https://github.com/mdmower-csnw/react-uswds/commit/d1d8f55fb29b2e364cc9d83eef4f7cc2ac468325))
+* Apply consistent USWDS class in slim Footer storybook example ([#3334](https://github.com/mdmower-csnw/react-uswds/issues/3334)) ([f3d48aa](https://github.com/mdmower-csnw/react-uswds/commit/f3d48aa0aedd887ce49c6dc4461b65440651d8d4))
+* clear input value on clearFiles from imperative handle ([#3090](https://github.com/mdmower-csnw/react-uswds/issues/3090)) ([ba607de](https://github.com/mdmower-csnw/react-uswds/commit/ba607de683768e37ad691455db5f77330a35f3c0))
+* Close language selector dropdown on selection or outside click ([#3528](https://github.com/mdmower-csnw/react-uswds/issues/3528)) ([6415f8f](https://github.com/mdmower-csnw/react-uswds/commit/6415f8f8b314814b5e3641b8ccea1f9bbfacb703))
+* Correctly pass down classname props to Combobox component ([#3143](https://github.com/mdmower-csnw/react-uswds/issues/3143)) ([2086ab8](https://github.com/mdmower-csnw/react-uswds/commit/2086ab838af4da6eee0a2a9ad10222aad8c3eec9))
+* do not automatically postinstall simple-git-hooks ([#3323](https://github.com/mdmower-csnw/react-uswds/issues/3323)) ([4b9b298](https://github.com/mdmower-csnw/react-uswds/commit/4b9b298b914a742b767d42dfd175ca263dc41620))
+* Do not set title on Tooltip trigger element ([#3313](https://github.com/mdmower-csnw/react-uswds/issues/3313)) ([f6e5d3f](https://github.com/mdmower-csnw/react-uswds/commit/f6e5d3f6187163aca99f1610ea8f04f0ac719ca5))
+* Enable recommended type linting and address errors ([#3327](https://github.com/mdmower-csnw/react-uswds/issues/3327)) ([aa926dc](https://github.com/mdmower-csnw/react-uswds/commit/aa926dc1c2553b3485ddb380b471d18baf5c500e))
+* Husky postinstall in dev only ([#3152](https://github.com/mdmower-csnw/react-uswds/issues/3152)) ([a9ce78b](https://github.com/mdmower-csnw/react-uswds/commit/a9ce78b190608e601d902c008b51e7287e528515))
+* Minor cleanup in Pagination stories ([#3320](https://github.com/mdmower-csnw/react-uswds/issues/3320)) ([acb8c41](https://github.com/mdmower-csnw/react-uswds/commit/acb8c4178cf00555b6cced255ee36bd998e95f6a))
+* **refactor:** Refactor Modal tests to prevent test flakes ([#3335](https://github.com/mdmower-csnw/react-uswds/issues/3335)) ([67dc45a](https://github.com/mdmower-csnw/react-uswds/commit/67dc45a7cf6d33ad8e0ebf8998da49f5808c87e2))
+* **release:** Fix react-uswds release pipeline ([#3148](https://github.com/mdmower-csnw/react-uswds/issues/3148)) ([70456f2](https://github.com/mdmower-csnw/react-uswds/commit/70456f2854f4c8fb2f9c82eecb77387fc1c70e58))
+* Replace deprecated React.FormEvent and React.FormEventHandler with derived types ([#3398](https://github.com/mdmower-csnw/react-uswds/issues/3398)) ([55f27c9](https://github.com/mdmower-csnw/react-uswds/commit/55f27c951d83ad5f7d309b403dbcbb413676e19f))
+* resolve type error reported during build ([#3315](https://github.com/mdmower-csnw/react-uswds/issues/3315)) ([fd2281c](https://github.com/mdmower-csnw/react-uswds/commit/fd2281c07e85d243379bc59417fbec9e37572a38))
+* **storybook:** Add aria-describedby to DateInput examples to date match USWDS example implementation ([#3312](https://github.com/mdmower-csnw/react-uswds/issues/3312)) ([cc43808](https://github.com/mdmower-csnw/react-uswds/commit/cc4380824bd75bffbff6f22f7fda85e50690faf8))
+* tooltip ID cleanup ([#3096](https://github.com/mdmower-csnw/react-uswds/issues/3096)) ([c161e1e](https://github.com/mdmower-csnw/react-uswds/commit/c161e1ee5855792feb77557303bf4f61de3bea86))
+* update FilePreview to handle multiple renders in strict mode ([#3236](https://github.com/mdmower-csnw/react-uswds/issues/3236)) ([9ee684f](https://github.com/mdmower-csnw/react-uswds/commit/9ee684f4156d25688fed20f84df947a419090b65))
+* Use default tsconfig.json for lint support of focus-trap-react.tsx ([#3337](https://github.com/mdmower-csnw/react-uswds/issues/3337)) ([55f11c5](https://github.com/mdmower-csnw/react-uswds/commit/55f11c5c605e749333265fd245023e28f5326e0f))
+* Use item IDs for accordion item keys ([#3317](https://github.com/mdmower-csnw/react-uswds/issues/3317)) ([2ba2b89](https://github.com/mdmower-csnw/react-uswds/commit/2ba2b89c2ba4ba1a29c2ca54cf7d1996bc533336))
+* useId instead of random number for tooltip ID ([#3094](https://github.com/mdmower-csnw/react-uswds/issues/3094)) ([d769610](https://github.com/mdmower-csnw/react-uswds/commit/d7696108154fd644371f0b06b5b2348f9603a619))
+
+
+### Documentation & Examples
+
+* add [@lea-m-truss](https://github.com/lea-m-truss) as a contributor ([#3108](https://github.com/mdmower-csnw/react-uswds/issues/3108)) ([0285f25](https://github.com/mdmower-csnw/react-uswds/commit/0285f2583c9d3c963a9e7518e6a901841ba2df80))
+* Improve Conventional Commit PR linting experience and document how to handle breaking changes ([#3314](https://github.com/mdmower-csnw/react-uswds/issues/3314)) ([1321aac](https://github.com/mdmower-csnw/react-uswds/commit/1321aac24c46fb857a36963bbe14c49af9c011b4))
+* **storybook:** Render Label examples within a `usa-form` for USWDS intended styling ([#3518](https://github.com/mdmower-csnw/react-uswds/issues/3518)) ([506903e](https://github.com/mdmower-csnw/react-uswds/commit/506903ec21505be68c678cee8f37023be608a04f))
+* **storybook:** Update Storybook Stories to CSF3 ([#3489](https://github.com/mdmower-csnw/react-uswds/issues/3489)) ([b2fa438](https://github.com/mdmower-csnw/react-uswds/commit/b2fa438b88b3bdfbb8f043e38da878a1f45db62d))
+* Update releasing documentation to mirror our more automated release system ([#3325](https://github.com/mdmower-csnw/react-uswds/issues/3325)) ([dc9a185](https://github.com/mdmower-csnw/react-uswds/commit/dc9a18569d46ae4f71128284784f679b4a0699f5))
+
 ## [12.0.0](https://github.com/trussworks/react-uswds/compare/11.2.0...12.0.0) (2026-08-09)
 
 
